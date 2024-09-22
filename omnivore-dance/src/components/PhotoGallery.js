@@ -2,10 +2,8 @@ import Isotope from "isotope-layout";
 import React, { forwardRef, useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { imgBaseUrl } from "../App";
-import { useLocalizedConfig } from "../components/Config";
-import { LanguageContext } from "../components/LanguageProvider";
-
-let photo = require("../config/photo.config.json");
+import { useLocalizedConfig } from "./Config";
+import { LanguageContext } from "./LanguageProvider";
 
 function FilterItem(props) {
   return (
@@ -43,7 +41,7 @@ const PhotoGalleryItem = forwardRef((props, ref) => {
 });
 
 function PhotoGallery() {
-  // const photo = useLocalizedConfig("photo.config.json");
+  const photo = useLocalizedConfig("photo.config.json");
   const [filter, setFilter] = useState("*");
   const [isotope, setIsotope] = useState(undefined);
   const [activity, setActivity] = useState();
@@ -88,9 +86,6 @@ function PhotoGallery() {
   return (
     <section className="portfolio-section spad" id="gallery">
       <div style={{ margin: "20px" }}>
-        <div className="section-title">
-          <h2>{photo && photo.title}</h2>
-        </div>
         <div>
           <ul className="portfolio-filter">
             {photo &&

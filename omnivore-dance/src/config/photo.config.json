@@ -50,26 +50,6 @@
             "label": ".us",
             "name": "🇺🇸U.S."
         },
-        {
-            "label": ".london",
-            "name": "🎡London"
-        },
-        {
-            "label": ".uk",
-            "name": "🇬🇧U.K & 🇮🇪Ireland"
-        },
-        {
-            "label": ".cn",
-            "name": "🇨🇳China/Asia"
-        },
-        {
-            "label": ".eu",
-            "name": "🇪🇺Europe"
-        },
-        {
-            "label": ".live",
-            "name": "🎵Live Concert"
-        }
     ],
     "title": "My Photo Gallery",
     "display_number": 70

@@ -1,6 +1,7 @@
 import "./App.css";
 import Home from "./pages/Home";
 import About from "./pages/About";
+import "./css/homepage.css";
 import Projects from "./pages/Projects";
 import axios from "axios";
 import { LanguageContextProvider } from "./components/LanguageProvider";
@@ -45,7 +46,8 @@ const validateMessages = {
 
 export const imgBaseUrl = "/images/";
 
-axios.defaults.baseURL = "/";
+axios.defaults.baseURL =
+  "https://raw.githubusercontent.com/zhao-xuan/Omnivore-Dance/refs/heads/main/omnivore-dance/src/";
 
 function App() {
   const [current, setCurrent] = useState("mail");
