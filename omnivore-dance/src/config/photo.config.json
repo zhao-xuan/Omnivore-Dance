@@ -41,7 +41,12 @@
             "id": "live-concert-2021-2023-in-london"
         }
     ],
-    "tags": [],
+    "tags": [
+        {
+            "label": "*",
+            "name": "All Photos"
+        }
+    ],
     "title": "My Photo Gallery",
     "display_number": 70
 }

@@ -19,7 +19,7 @@ function FilterItem(props) {
 const PhotoGalleryItem = forwardRef((props, ref) => {
   const classSetting = props.position + " " + props.tag;
   const bgImageStyle = {
-    backgroundImage: "url(" + imgBaseUrl + props.image + ")",
+    backgroundImage: "url(" + props.image + ")",
   };
 
   return (
@@ -45,7 +45,6 @@ function PhotoGallery() {
   const [filter, setFilter] = useState("*");
   const [isotope, setIsotope] = useState(undefined);
   const [activity, setActivity] = useState();
-  const { lang } = useContext(LanguageContext);
 
   useEffect(() => {
     if (photo) {

@@ -44,8 +44,6 @@ const validateMessages = {
   },
 };
 
-export const imgBaseUrl = "/images/";
-
 axios.defaults.baseURL =
   "https://raw.githubusercontent.com/zhao-xuan/Omnivore-Dance/refs/heads/main/omnivore-dance/src/";
 
