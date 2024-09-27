@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Image, Col, Row } from "antd";
+import { Typography, Image, Col, Row, Flex } from "antd";
 import { useLocalizedConfig } from "../components/Config";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "../App";
 
 const { Title, Paragraph } = Typography;
@@ -10,6 +10,7 @@ const ProjectDetail = () => {
   const configs = useLocalizedConfig("projects.config.json");
   const { projectName } = useParams();
   const [index, setIndex] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (configs) {
@@ -77,6 +78,68 @@ const ProjectDetail = () => {
             )
           )}
       </Row>
+      <Flex style={{ padding: "0 40px" }} horizontal justify="space-between">
+        {configs && index - 1 >= 0 ? (
+          <a
+            onClick={() => {
+              navigate(`/project/${configs.projects[index - 1].imagePath}`);
+              navigate(0);
+            }}
+          >
+            {" "}
+            <Flex horizontal>
+              <Title style={{ color: "white", lineHeight: "60px" }}>
+                {"<"}
+              </Title>
+              <Flex vertical style={{ paddingLeft: "20px" }}>
+                <a
+                  style={{
+                    backgroundColor: "transparent",
+                    color: "white",
+                    width: "80%",
+                    fontSize: "40px",
+                    fontFamily: "oswald",
+                  }}
+                >
+                  {configs && configs.projects[index - 1].name}
+                </a>
+              </Flex>
+            </Flex>
+          </a>
+        ) : (
+          <p style={{ width: "50%" }}></p>
+        )}
+        {configs && index + 1 < configs.projects.length ? (
+          <a
+            onClick={() => {
+              navigate(`/project/${configs.projects[index + 1].imagePath}`);
+              navigate(0);
+            }}
+          >
+            {" "}
+            <Flex horizontal justify="flex-end">
+              <Flex vertical style={{ marginRight: "20px" }}>
+                <a
+                  style={{
+                    backgroundColor: "transparent",
+                    color: "white",
+                    fontSize: "40px",
+                    fontFamily: "oswald",
+                    textAlign: "end",
+                  }}
+                >
+                  {configs && configs.projects[index + 1].name}
+                </a>
+              </Flex>
+              <Title style={{ color: "white", lineHeight: "60px" }}>
+                {">"}
+              </Title>
+            </Flex>
+          </a>
+        ) : (
+          <p style={{ width: "50%" }}></p>
+        )}
+      </Flex>
     </div>
   );
 };

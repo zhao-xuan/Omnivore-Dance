@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Card, Col, Row, Flex, Button } from "antd";
 import { useLocalizedConfig } from "../components/Config";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { BASE_URL } from "../App";
 import Paragraph from "antd/es/skeleton/Paragraph";
 
@@ -80,37 +80,97 @@ const ScheduleDetail = () => {
           justify={"space-between"}
         >
           {configs && index - 1 >= 0 ? (
-            <Button
-              style={{
-                backgroundColor: "transparent",
-                color: "white",
-                border: "0",
-                marginTop: "10px",
-                padding: "25px",
-                fontSize: "80px",
-                fontFamily: "oswald",
+            <a
+              onClick={() => {
+                navigate(`/schedule/${configs.schedules[index - 1].path}`);
+                navigate(0);
               }}
             >
-              {configs && configs.schedules[index - 1].name}
-            </Button>
+              {" "}
+              <Flex horizontal>
+                <Title style={{ color: "white", lineHeight: "auto" }}>
+                  {"<"}
+                </Title>
+                <Flex vertical style={{ paddingLeft: "20px" }}>
+                  <Title
+                    level={3}
+                    style={{
+                      color: "white",
+                      fontFamily: "oswald",
+                      fontWeight: 100,
+                    }}
+                  >
+                    {new Date(
+                      configs.schedules[index - 1].date
+                    ).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </Title>
+                  <a
+                    style={{
+                      backgroundColor: "transparent",
+                      color: "white",
+                      width: "80%",
+                      fontSize: "40px",
+                      fontFamily: "oswald",
+                    }}
+                  >
+                    {configs && configs.schedules[index - 1].name}
+                  </a>
+                </Flex>
+              </Flex>
+            </a>
           ) : (
-            <></>
+            <p style={{ width: "50%" }}></p>
           )}
-          {configs && index < configs.schedules.length ? (
-            <Button
-              style={{
-                backgroundColor: "transparent",
-                color: "white",
-                border: "0",
-                marginTop: "10px",
-                padding: "25px",
-                fontFamily: "Space Mono",
+          {configs && index + 1 < configs.schedules.length ? (
+            <a
+              onClick={() => {
+                navigate(`/schedule/${configs.schedules[index + 1].path}`);
+                navigate(0);
               }}
             >
-              {configs && configs.schedules[index].name}
-            </Button>
+              {" "}
+              <Flex horizontal justify="flex-end">
+                <Flex vertical style={{ marginRight: "20px" }}>
+                  <Title
+                    level={3}
+                    style={{
+                      color: "white",
+                      fontFamily: "oswald",
+                      fontWeight: 100,
+                      textAlign: "right",
+                    }}
+                  >
+                    {new Date(
+                      configs.schedules[index + 1].date
+                    ).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </Title>
+                  <a
+                    style={{
+                      backgroundColor: "transparent",
+                      color: "white",
+                      fontSize: "40px",
+                      fontFamily: "oswald",
+                      textAlign: "end",
+                    }}
+                  >
+                    {configs && configs.schedules[index + 1].name}
+                  </a>
+                </Flex>
+                <Title style={{ color: "white", lineHeight: "auto" }}>
+                  {">"}
+                </Title>
+              </Flex>
+            </a>
           ) : (
-            <></>
+            <p style={{ width: "50%" }}></p>
           )}
         </Flex>
       </>
