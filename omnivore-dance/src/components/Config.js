@@ -8,7 +8,7 @@ export function useLocalizedConfig(config) {
   const [contents, setContents] = useState(null);
 
   useEffect(() => {
-    axios.get(`/config/${config}`).then((resp) => {
+    axios.get(`/configs/${config}`).then((resp) => {
       console.log(resp.data);
       setContents(resp.data);
     });

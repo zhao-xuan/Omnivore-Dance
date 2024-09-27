@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Layout, Button, Drawer, Typography, Flex } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
+import { useNavigate, useNavigation } from "react-router-dom";
 // import { useLocation } from "react-router-dom";
 
 const { Title } = Typography;
@@ -10,6 +11,7 @@ const Navbar = () => {
   const showDrawer = () => {
     setVisible(!visible);
   };
+  const navigate = useNavigate();
 
   // If you do not want to auto-close the mobile drawer when a path is selected
   // Delete or comment out the code block below
@@ -37,6 +39,9 @@ const Navbar = () => {
             fontSize: "16px",
             fontFamily: "Space Mono",
           }}
+          onClick={() => {
+            navigate("/about");
+          }}
         >
           ABOUT
         </Button>
@@ -47,6 +52,9 @@ const Navbar = () => {
             fontSize: "16px",
             fontFamily: "Space Mono",
           }}
+          onClick={() => {
+            navigate("/projects");
+          }}
         >
           PROJECTS
         </Button>
@@ -56,6 +64,9 @@ const Navbar = () => {
             color: "white",
             fontSize: "16px",
             fontFamily: "Space Mono",
+          }}
+          onClick={() => {
+            navigate("/schedules");
           }}
         >
           SCHEDULE
@@ -71,8 +82,11 @@ const Navbar = () => {
           textAlign: "center",
           fontFamily: "Oswald",
         }}
+        onClick={() => {
+          navigate("/");
+        }}
       >
-        Omnivore Dance
+        <a>Omnivore Dance</a>
       </Title>
       <Flex style={{ width: "30%", justifyContent: "flex-end" }}>
         <Button

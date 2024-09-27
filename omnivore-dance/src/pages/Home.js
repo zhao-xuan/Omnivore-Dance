@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Layout, Image, Col, Row } from "antd";
 import Paragraph from "antd/es/typography/Paragraph";
+import { useLocalizedConfig } from "../components/Config";
+import { BASE_URL } from "../App";
 
 const { Title } = Typography;
 const { Content } = Layout;
@@ -24,24 +26,34 @@ const validateMessages = {
 };
 
 const Home = () => {
+  const configs = useLocalizedConfig("home.config.json");
+  const [text, setText] = useState();
+
+  useEffect(() => {
+    if (configs) {
+      setText(configs);
+    }
+  }, [configs]);
+
   return (
     <Content style={contentStyle}>
       <Title
-        level={3}
+        level={4}
         style={{
           textAlign: "center",
           fontFamily: "Space Mono",
           color: "white",
+          paddingTop: "40px",
         }}
       >
-        We devour everything.
+        {text && text.slogan}
       </Title>
       <Image
         preview={false}
         width={"100%"}
-        src="https://images.squarespace-cdn.com/content/v1/66c9fa6ef7f1d5548ace346b/d5f2e10d-1258-4212-a93c-2377ffc75fac/DSC09062.jpg?format=1000w"
+        src={BASE_URL + "images/home/home-cover.jpg"}
       />
-      <div>
+      <div style={{ paddingBottom: "80px" }}>
         <>
           <Row>
             <Col span={13} style={{ padding: "80px", paddingRight: 0 }}>
@@ -53,51 +65,27 @@ const Home = () => {
                   color: "white",
                 }}
               >
-                A life force we’re after
+                {text && text.title}
               </Title>
-              <Paragraph
-                style={{
-                  fontSize: "16px",
-                  fontFamily: "Space Mono",
-                  color: "white",
-                }}
-              >
-                Philosopher-turned choreographers and dancers Yinqi and Maggie
-                have finally found out that it is a Nietzschean life force that
-                they’re after. So commonly found in nature, that primal energy
-                is depleting in contemporary times. To them, this fictitious yet
-                critical essence only materializes as they dance and make dance.
-              </Paragraph>
-              <Paragraph
-                style={{
-                  fontSize: "16px",
-                  fontFamily: "Space Mono",
-                  color: "white",
-                }}
-              >
-                Imbued with this power, they consult their imagination to
-                construct wild realities on stage. They also turn to the
-                instruments of their bodies to research the myriad ways they can
-                move across time and space.
-              </Paragraph>
-              <Paragraph
-                style={{
-                  fontSize: "16px",
-                  fontFamily: "Space Mono",
-                  color: "white",
-                }}
-              >
-                This is the life force they’re after — a force that is at once
-                terrifying and beautiful, destructive and creative, chaotic and
-                sublime.
-              </Paragraph>
+              {text &&
+                text.content.map((item) => (
+                  <Paragraph
+                    style={{
+                      fontSize: "16px",
+                      fontFamily: "Space Mono",
+                      color: "white",
+                    }}
+                  >
+                    {item}
+                  </Paragraph>
+                ))}
             </Col>
             <Col span={11} offset={0} style={{ padding: "60px 40px" }}>
               <Image
                 preview={false}
                 style={{ borderRadius: "20px" }}
                 width={"100%"}
-                src="https://images.squarespace-cdn.com/content/v1/66c9fa6ef7f1d5548ace346b/afa14b5a-4d39-412b-ac66-c956be31394d/IMG_5363.jpg?format=1000w"
+                src={BASE_URL + "images/home/home-intro-1.jpg"}
               />
             </Col>
           </Row>
@@ -107,7 +95,7 @@ const Home = () => {
                 preview={false}
                 style={{ borderRadius: "20px" }}
                 width={"100%"}
-                src="https://images.squarespace-cdn.com/content/v1/66c9fa6ef7f1d5548ace346b/d395eb12-6d4e-4900-8c42-bcf16ad45985/IMG_6279.jpg?format=1000w"
+                src={BASE_URL + "images/home/home-intro-2.jpg"}
               />
             </Col>
             <Col
@@ -119,7 +107,7 @@ const Home = () => {
                 preview={false}
                 style={{ borderRadius: "20px" }}
                 width={"100%"}
-                src="https://images.squarespace-cdn.com/content/v1/66c9fa6ef7f1d5548ace346b/73e47f86-4ae9-4709-baaa-4ae61ab8d6fb/IMG_5464.jpg?format=1000w"
+                src={BASE_URL + "images/home/home-intro-3.jpg"}
               />
             </Col>
           </Row>

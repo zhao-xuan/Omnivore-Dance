@@ -1,53 +1,41 @@
 import Isotope from "isotope-layout";
-import React, { forwardRef, useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
-import { imgBaseUrl } from "../App";
+import React, { forwardRef, useEffect, useState } from "react";
 import { useLocalizedConfig } from "./Config";
-import { LanguageContext } from "./LanguageProvider";
-
-function FilterItem(props) {
-  return (
-    <li
-      className={"filter" + (props.active ? " active" : "")}
-      onClick={props.onClick}
-    >
-      {props.title}
-    </li>
-  );
-}
+import { BASE_URL } from "../App";
+import { Link } from "react-router-dom";
 
 const PhotoGalleryItem = forwardRef((props, ref) => {
-  const classSetting = props.position + " " + props.tag;
+  const classSetting = "col-lg-4 col-md-6";
   const bgImageStyle = {
-    backgroundImage: "url(" + props.image + ")",
+    backgroundImage:
+      "url(" + BASE_URL + "images/projects/" + props.image + "/cover.jpg)",
+    paddingTop: "100%",
   };
 
   return (
     <div className={classSetting} ref={ref} style={{ padding: "0 5px" }}>
-      {/* <Link to={props.link}> */}
-      <a
-        href={props.link}
-        className="portfolio-item set-bg"
-        style={bgImageStyle}
-      >
-        <div className="portfolio-text">
-          <h2>{props.title}</h2>
-          <p>{props.location}</p>
-        </div>
-      </a>
-      {/* </Link> */}
+      <Link to={`/project/${props.link}`}>
+        <a
+          href={props.link}
+          className="portfolio-item set-bg"
+          style={bgImageStyle}
+        >
+          <div className="portfolio-text">
+            <h2>{props.title}</h2>
+          </div>
+        </a>
+      </Link>
     </div>
   );
 });
 
 function PhotoGallery() {
-  const photo = useLocalizedConfig("photo.config.json");
-  const [filter, setFilter] = useState("*");
+  const configs = useLocalizedConfig("projects.config.json");
   const [isotope, setIsotope] = useState(undefined);
-  const [activity, setActivity] = useState();
+  const [gallery, setGallery] = useState();
 
   useEffect(() => {
-    if (photo) {
+    if (configs) {
       if (!isotope) {
         setTimeout(() => {
           const node = document.querySelector(".isotope_items");
@@ -55,14 +43,9 @@ function PhotoGallery() {
         }, 100);
       }
 
-      setActivity({
-        ...photo,
-        display_number: activity
-          ? activity.display_number
-          : photo.display_number,
-      });
+      setGallery(configs.projects);
     }
-  }, [photo]);
+  }, [configs]);
 
   useEffect(() => {
     if (isotope) {
@@ -71,55 +54,23 @@ function PhotoGallery() {
         setIsotope(new Isotope(".isotope_items", { layoutMode: "fitRows" }));
       }, 100);
     }
-  }, [activity]);
-
-  const onChangeFilter = (filterLabel) => {
-    // setActivity({ ...activity, display_number: 100 })
-    isotope.arrange({
-      filter: filterLabel,
-    });
-    isotope.layout();
-    // setActivity({ ...activity, display_number: 5 })
-  };
+  }, [gallery]);
 
   return (
     <section className="portfolio-section spad" id="gallery">
-      <div style={{ margin: "20px" }}>
-        <div>
-          <ul className="portfolio-filter">
-            {photo &&
-              photo.tags.map((item) => (
-                <FilterItem
-                  active={filter === item.label}
-                  onClick={() => {
-                    setFilter(item.label);
-                    onChangeFilter(item.label);
-                  }}
-                  filter={item.label}
+      <div style={{ margin: "50px" }}>
+        {configs && (
+          <div className="row isotope_items">
+            {gallery &&
+              gallery.map((item) => (
+                <PhotoGalleryItem
+                  key={`${item.name}`}
+                  id={item.name}
+                  image={item.imagePath}
                   title={item.name}
+                  link={item.imagePath}
                 />
               ))}
-          </ul>
-        </div>
-        {photo && (
-          <div className="row isotope_items">
-            {/* <FlipMove> .filter(item => (filter === "*" || filter == item.filter)) */}
-            {activity &&
-              activity.covers
-                .slice(0, activity.display_number)
-                .map((item) => (
-                  <PhotoGalleryItem
-                    key={`${item.title}_${activity.display_number}`}
-                    id={item.id}
-                    tag={item.filter}
-                    image={item.image}
-                    title={item.title}
-                    location={item.location}
-                    position={item.position}
-                    link={item.link}
-                  />
-                ))}
-            {/* </FlipMove> */}
           </div>
         )}
       </div>

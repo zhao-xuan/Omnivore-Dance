@@ -1,28 +1,33 @@
 import React from "react";
 import { Typography, Image, Col, Row } from "antd";
 import PhotoGallery from "../components/PhotoGallery";
+import { useLocalizedConfig } from "../components/Config";
 
 const { Title } = Typography;
 
 const Projects = () => {
+  const configs = useLocalizedConfig("projects.config.json");
+
   return (
     <div style={{ backgroundColor: "black" }}>
       <>
         <Row>
           <Title
-            level={2}
+            level={1}
             style={{
               color: "white",
               fontFamily: "oswald",
-              padding: "20px 18%",
+              padding: "40px 14% 10px",
+              textAlign: "center",
             }}
           >
-            Driven by a naive passion to move, a keen desire to express, and a
-            strong dedication for physical research…
+            {configs && configs.slogan}
           </Title>
         </Row>
         <Row>
-          <PhotoGallery />
+          <Col span={24}>
+            <PhotoGallery />
+          </Col>
         </Row>
       </>
     </div>

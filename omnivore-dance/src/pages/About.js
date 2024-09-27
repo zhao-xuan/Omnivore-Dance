@@ -1,15 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Image, Col, Row } from "antd";
 import Paragraph from "antd/es/typography/Paragraph";
+import { useLocalizedConfig } from "../components/Config";
+import { BASE_URL } from "../App";
 
 const { Title } = Typography;
 
 const About = () => {
+  const configs = useLocalizedConfig("about.config.json");
+  const [text, setText] = useState();
+
+  useEffect(() => {
+    if (configs) {
+      setText(configs);
+    }
+  }, [configs]);
+
   return (
     <div style={{ backgroundColor: "black" }}>
       <>
         <Row>
-          <Col span={12} style={{ padding: "80px", paddingRight: 0 }}>
+          <Col
+            span={12}
+            style={{ padding: "80px", paddingRight: 0, height: "200%" }}
+          >
             <Title
               level={1}
               style={{
@@ -18,7 +32,7 @@ const About = () => {
                 color: "white",
               }}
             >
-              We are…
+              {text && text.title}
             </Title>
             <Paragraph
               style={{
@@ -27,29 +41,43 @@ const About = () => {
                 color: "white",
               }}
             >
-              a funny performance duo. More professionally speaking, we are a
-              performance duo that is willing to laugh at ourselves, to take
-              bold risks, and to speak truths that are tucked away in our bodies
-              and in the world.
+              {text && text.introduction}
             </Paragraph>
           </Col>
           <Col span={12}>
             <Image
               preview={false}
-              width={"100%"}
-              src="https://images.squarespace-cdn.com/content/v1/66c9fa6ef7f1d5548ace346b/99ceb54e-c3d2-428f-b76b-d9c1c4f0a2c3/DSC09408.jpg?format=2500w"
+              src={BASE_URL + "images/about/about-cover.jpg"}
             />
           </Col>
         </Row>
         <Row>
-          <Col span={12}>
-            <Image
-              preview={false}
-              width={"100%"}
-              src="https://images.squarespace-cdn.com/content/v1/66c9fa6ef7f1d5548ace346b/99ceb54e-c3d2-428f-b76b-d9c1c4f0a2c3/DSC09408.jpg?format=2500w"
-            />
+          <Col span={14} style={{ padding: "80px 0px 0px 120px" }}>
+            <div style={{ position: "relative", top: 0, left: 0 }}>
+              <Image
+                preview={false}
+                style={{
+                  borderRadius: "30px",
+                  position: "relative",
+                  top: 0,
+                  left: 0,
+                }}
+                src={BASE_URL + "images/about/about-intro-image-cover.jpg"}
+              />
+              <img
+                preview={false}
+                style={{
+                  position: "absolute",
+                  objectFit: "cover",
+                  top: "30px",
+                  left: "20px",
+                  zIndex: 9999,
+                }}
+                src={BASE_URL + "images/about/about-intro-image.png"}
+              />
+            </div>
           </Col>
-          <Col span={12} style={{ padding: "80px", paddingRight: 0 }}>
+          <Col span={10} style={{ padding: "80px 60px", paddingRight: "80px" }}>
             <Title
               level={1}
               style={{
@@ -58,49 +86,62 @@ const About = () => {
                 color: "white",
               }}
             >
-              We are…
+              {text && text.secondaryTitle}
             </Title>
+            {text &&
+              text.secondaryIntro.map((item) => (
+                <Paragraph
+                  style={{
+                    fontSize: "16px",
+                    fontFamily: "Space Mono",
+                    color: "white",
+                  }}
+                >
+                  {item}
+                </Paragraph>
+              ))}
           </Col>
         </Row>
-        <Row>
-          <Col span={4}>
-            <Image
-              preview={false}
-              width={"100%"}
-              src="https://images.squarespace-cdn.com/content/v1/66c9fa6ef7f1d5548ace346b/99ceb54e-c3d2-428f-b76b-d9c1c4f0a2c3/DSC09408.jpg?format=2500w"
-            />
-          </Col>
-          <Col span={8} style={{ padding: "80px", paddingRight: 0 }}>
-            <Title
-              level={1}
-              style={{
-                fontFamily: "Oswald",
-                fontSize: 50,
-                color: "white",
-              }}
-            >
-              We are…
-            </Title>
-          </Col>
-          <Col span={4}>
-            <Image
-              preview={false}
-              width={"100%"}
-              src="https://images.squarespace-cdn.com/content/v1/66c9fa6ef7f1d5548ace346b/99ceb54e-c3d2-428f-b76b-d9c1c4f0a2c3/DSC09408.jpg?format=2500w"
-            />
-          </Col>
-          <Col span={8} style={{ padding: "80px", paddingRight: 0 }}>
-            <Title
-              level={1}
-              style={{
-                fontFamily: "Oswald",
-                fontSize: 50,
-                color: "white",
-              }}
-            >
-              We are…
-            </Title>
-          </Col>
+        <Row style={{ padding: "50px" }}>
+          {text &&
+            text.profiles.map((item) => (
+              <>
+                <Col span={4}>
+                  <Image
+                    preview={false}
+                    width={"100%"}
+                    style={{
+                      borderRadius: "50%",
+                      height: "290px",
+                      width: "250px",
+                      margin: "30px",
+                    }}
+                    src={BASE_URL + "images/about/" + item.photo}
+                  />
+                </Col>
+                <Col span={8} style={{ padding: "80px", paddingRight: 0 }}>
+                  <Title
+                    level={1}
+                    style={{
+                      fontFamily: "Oswald",
+                      fontSize: 40,
+                      color: "white",
+                    }}
+                  >
+                    {item.name}
+                  </Title>
+                  <Paragraph
+                    style={{
+                      fontSize: "14px",
+                      fontFamily: "Space Mono",
+                      color: "white",
+                    }}
+                  >
+                    {item.intro}
+                  </Paragraph>
+                </Col>
+              </>
+            ))}
         </Row>
       </>
     </div>

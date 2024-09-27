@@ -1,6 +1,8 @@
 import "./App.css";
 import Home from "./pages/Home";
 import About from "./pages/About";
+import Schedule from "./pages/Schedule";
+import ScheduleDetail from "./pages/ScheduleDetail";
 import "./css/homepage.css";
 import Projects from "./pages/Projects";
 import axios from "axios";
@@ -16,15 +18,21 @@ import Navbar from "./components/Navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faHandHoldingDollar } from "@fortawesome/free-solid-svg-icons";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ProjectDetail from "./pages/ProjectDetail";
 
 const { Title, Text } = Typography;
-const { Header, Footer } = Layout;
+const { Header, Content, Footer } = Layout;
 
 const headerStyle = {
   height: "100px",
   paddingInline: 20,
   lineHeight: "100px",
   backgroundColor: "black",
+  position: "sticky",
+  top: 0,
+  zIndex: 99,
+  alignItems: "center",
 };
 
 const footerStyle = {
@@ -44,30 +52,39 @@ const validateMessages = {
   },
 };
 
-axios.defaults.baseURL =
-  "https://raw.githubusercontent.com/zhao-xuan/Omnivore-Dance/refs/heads/main/omnivore-dance/src/";
+export const BASE_URL =
+  "https://raw.githubusercontent.com/omnivore-dance/omnivore-dance.github.io/refs/heads/main/";
+
+axios.defaults.baseURL = BASE_URL;
 
 function App() {
   const [current, setCurrent] = useState("mail");
-  const onClick = (e) => {
-    console.log("click ", e);
-    setCurrent(e.key);
-  };
 
   const onFinish = (values) => {
     console.log(values);
   };
 
   return (
-    <Flex>
+    <Router>
       <Layout>
         <Header style={headerStyle}>
           <Navbar />
         </Header>
-        <LanguageContextProvider>
-          <Projects />
-        </LanguageContextProvider>
-
+        <Content>
+          <LanguageContextProvider>
+            <Routes>
+              <Route path="/" Component={Home} />
+              <Route path="/about" Component={About} />
+              <Route path="/projects" Component={Projects} />
+              <Route path="/schedules" Component={Schedule} />
+              <Route path="/project/:projectName" Component={ProjectDetail} />
+              <Route
+                path="/schedule/:scheduleName"
+                Component={ScheduleDetail}
+              />
+            </Routes>
+          </LanguageContextProvider>
+        </Content>
         <Footer style={footerStyle}>
           <Title
             level={1}
@@ -132,21 +149,37 @@ function App() {
           </Form>
 
           <Flex justify="center">
-            <FontAwesomeIcon
-              icon={faInstagram}
-              size="lg"
-              style={{ padding: "10px" }}
-            />
-            <FontAwesomeIcon
-              icon={faInstagram}
-              size="lg"
-              style={{ padding: "10px" }}
-            />
-            <FontAwesomeIcon
-              icon={faHandHoldingDollar}
-              size="lg"
-              style={{ padding: "10px" }}
-            />
+            <a
+              href="https://www.instagram.com/xiao_liang_xiao/"
+              style={{ color: "white" }}
+            >
+              <FontAwesomeIcon
+                icon={faInstagram}
+                size="lg"
+                style={{ padding: "10px" }}
+              />
+            </a>
+
+            <a
+              href="https://www.instagram.com/wang_yinqi_dance/"
+              style={{ color: "white" }}
+            >
+              <FontAwesomeIcon
+                icon={faInstagram}
+                size="lg"
+                style={{ padding: "10px" }}
+              />
+            </a>
+            <a
+              href="https://www.gofundme.com/f/bring-ominvore-dances-bold-performance-to-your-city"
+              style={{ color: "white" }}
+            >
+              <FontAwesomeIcon
+                icon={faHandHoldingDollar}
+                size="lg"
+                style={{ padding: "10px" }}
+              />
+            </a>
           </Flex>
 
           <Flex justify="space-between">
@@ -159,7 +192,7 @@ function App() {
           </Flex>
         </Footer>
       </Layout>
-    </Flex>
+    </Router>
   );
 }
 
