@@ -12,14 +12,34 @@ import "@fontsource/space-mono"; // Defaults to weight 400
 import "@fontsource/space-mono/400.css"; // Specify weight
 import "@fontsource/space-mono/400-italic.css"; // Specify weight and style
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Typography, Button, Flex, Layout, Form, Input } from "antd";
 import Navbar from "./components/Navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faHandHoldingDollar } from "@fortawesome/free-solid-svg-icons";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  HashRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import ProjectDetail from "./pages/ProjectDetail";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    // "document.documentElement.scrollTo" is the magic for React Router Dom v6
+    document.documentElement.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant", // Optional if you want to skip the scrolling animation
+    });
+  }, [pathname]);
+
+  return null;
+}
 
 const { Title, Text } = Typography;
 const { Header, Content, Footer } = Layout;
@@ -66,6 +86,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <Layout>
         <Header style={headerStyle}>
           <Navbar />

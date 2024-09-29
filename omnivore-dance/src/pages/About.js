@@ -71,7 +71,6 @@ const About = () => {
                   objectFit: "cover",
                   top: "30px",
                   left: "20px",
-                  zIndex: 9999,
                 }}
                 src={BASE_URL + "images/about/about-intro-image.png"}
               />
